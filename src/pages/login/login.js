@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom';
 import { Form, Icon, Input, Button } from 'antd';
 import './login.less'
+import {reqLogin} from '../../api'
+import memoryUtil from '../../utils/memory'
+import localStorageUtil from '../../utils/localStorage'
+import { from } from 'rxjs';
 
 class Login extends Component {
     constructor(props) {
@@ -8,6 +13,12 @@ class Login extends Component {
         this.state = {  }
     }
     render() { 
+        //判断是否已经登录，若已经登录直接跳转
+        const user = memoryUtil.user;
+        if(JSON.stringify(user)!='{}'){
+            return <Redirect to='/'/>
+        }
+
         const form = this.props.form;
         const { getFieldDecorator } = form;
         return ( 
@@ -70,9 +81,26 @@ class Login extends Component {
         //阻止事件的默认行为;
         event.preventDefault();
         //点击登录时进行校验
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields(async(err, values) => {
             if (!err) {
-                console.log('校验通过获取到的表单的值', values);
+                const {username, password} = values;
+                //promise方式异步处理
+                // reqLogin(username,password).then(res => {
+                //     console.log(res)
+                // })
+
+                //asnyc await 方式获取数据
+                // const res = await reqLogin(username,password)
+                // console.log(res)
+                //将用户信息保存到内存中
+                memoryUtil.user = {username: 'admin'}
+                //将用户信息保存到localstorage中
+                localStorageUtil.setUser({username: 'admin'})
+                //登录成功跳转
+                //repalace替换当前路由，不能再回退到当前路由
+                this.props.history.replace('/')
+                //push新增路由，可以再回退到当前路由
+                // this.props.history.push('/')
             }
         });
         //获取表单数据
