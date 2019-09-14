@@ -31,7 +31,7 @@ class Admin extends Component {
                 </Sider>
                 <Layout>
                     <Header></Header>
-                    <Content>
+                    <Content style={{background: '#fff', margin: '10px'}}>
                         <Switch>
                             <Route path='/home' component={Home}></Route>
                             <Route path='/product' component={Product}></Route>
@@ -42,7 +42,7 @@ class Admin extends Component {
                             <Redirect to='/home'/>
                         </Switch>
                     </Content>
-                    <Footer style={{background:'#ccc', textAlign: "center"}}>@whg</Footer>
+                    <Footer style={{background:'#fff', textAlign: "center"}}>@whg</Footer>
                 </Layout>
             </Layout>
          );
