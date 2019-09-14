@@ -6,3 +6,6 @@
 import ajax from './ajax'
 
 export const reqLogin = (username,password) => ajax('/login',{username,password},'POST')
+
+//分类数据
+export const reqGetCategoryList = () => ajax('/category')
