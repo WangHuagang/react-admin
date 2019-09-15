@@ -9,3 +9,6 @@ export const reqLogin = (username,password) => ajax('/login',{username,password}
 
 //分类数据
 export const reqGetCategoryList = () => ajax('/category')
+
+//获取二级分类列表
+export const reqSubCategoryLists = (key) => ajax('/category2',{key:key})

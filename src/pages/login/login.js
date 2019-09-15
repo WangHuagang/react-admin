@@ -90,12 +90,11 @@ class Login extends Component {
                 // })
 
                 //asnyc await 方式获取数据
-                // const res = await reqLogin(username,password)
-                // console.log(res)
+                const res = await reqLogin(username,password)
                 //将用户信息保存到内存中
-                memoryUtil.user = {username: 'admin'}
+                memoryUtil.user = res.data
                 //将用户信息保存到localstorage中
-                localStorageUtil.setUser({username: 'admin'})
+                localStorageUtil.setUser(res.data)
                 //登录成功跳转
                 //repalace替换当前路由，不能再回退到当前路由
                 this.props.history.replace('/')
