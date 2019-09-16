@@ -1,27 +1,36 @@
-import React, {Component} from 'react';
-//引入路由器及路由
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
-import Login from './pages/login/login'
-import Admin from './pages/admin/admin'
+import React, { Component } from 'react';
 
+import {addAction, shortAction} from './redux/actions'
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {  }
-  }
-  render() {
-    return (
-      <BrowserRouter>
-      {/* switch只匹配其中一个路由 */}
-        <Switch>
-          <Route path='/login' component={Login}></Route>
-          <Route path='/' component={Admin}></Route>
-        </Switch>
-      </BrowserRouter>
-    )
-  }
+    constructor(props) {
+        super(props);
+        this.state = {  }
+        this.numRef = React.createRef()
+    }
+    render() { 
+        return ( 
+            <div>
+                <p>当前值: {this.props.store.getState()}</p>
+                <select ref={this.numRef}>
+                    <option value='1'>1</option>
+                    <option value='2'>2</option>
+                    <option value='3'>3</option>
+                </select>
+                <button onClick={this.add}>+</button>
+                <button onClick={this.short}>-</button>
+            </div>
+         );
+    }
 
+    add = () => {
+        const num = this.numRef.current.value * 1
+        this.props.store.dispatch(addAction(num))
+    }
+
+    short = () => {
+        const num = this.numRef.current.value * 1
+        this.props.store.dispatch(shortAction(num))
+    }
 }
  
 export default App;
-
